@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_using_bloc/data/models/todo_model.dart';
@@ -8,8 +10,8 @@ import '../widgets/add_screen/title_field.dart';
 
 class AddTodoScreen extends StatefulWidget {
   const AddTodoScreen(
-      {super.key, required this.length, required this.isNew, this.todo});
-  final int? length;
+      {super.key, required this.isNew, this.todo});
+
   final bool isNew;
   final Todo? todo;
 
@@ -21,14 +23,16 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _titleTEC = TextEditingController();
   final TextEditingController _descriptionTEC = TextEditingController();
+
   @override
   void initState() {
     super.initState();
-    if(!widget.isNew){
+    if (!widget.isNew) {
       _titleTEC.text = widget.todo!.title;
       _descriptionTEC.text = widget.todo!.description;
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +67,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
     );
   }
 
-  void checkButtonPressed(BuildContext context) {
+  void checkButtonPressed(BuildContext context,) {
     if (_formKey.currentState!.validate()) {
       if (widget.isNew) {
         addTodo(context);
@@ -86,8 +90,8 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
 
   void addTodo(BuildContext context) {
     context.read<TodoBloc>().add(Add(
-            newTodo: Todo(
-          id: widget.length! + 1,
+        newTodo: Todo(
+          id: 0,
           title: _titleTEC.text.trim(),
           description: _descriptionTEC.text,
         )));

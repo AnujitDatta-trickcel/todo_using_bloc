@@ -1,3 +1,4 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_using_bloc/logic/todo_bloc.dart';
@@ -12,9 +13,8 @@ class Todo extends StatelessWidget {
       create: (context) => TodoBloc(),
       child: MaterialApp(
         title: 'Todo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: FlexThemeData.light(scheme: FlexScheme.aquaBlue),
+        darkTheme: FlexThemeData.dark(scheme: FlexScheme.aquaBlue),
         home: const HomeScreen(),
       ),
     );

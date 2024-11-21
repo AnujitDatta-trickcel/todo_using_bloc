@@ -5,9 +5,7 @@ import '../../screens/add.dart';
 class AddButton extends StatelessWidget {
   const AddButton({
     super.key,
-    required this.length,
   });
-  final int length;
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +14,7 @@ class AddButton extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => AddTodoScreen(
-                  length: length,
+                builder: (context) => const AddTodoScreen(
                   isNew: true,
                 )));
       },

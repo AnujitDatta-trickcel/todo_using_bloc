@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_using_bloc/data/models/todo_model.dart';
@@ -9,6 +10,7 @@ class LocalData{
   static Future<void> save()async{
     SharedPreferences prefs=await SharedPreferences.getInstance();
     String data=jsonEncode(todos.map((e) => e.toJson()).toList());
+    log(data);
     await prefs.setString('todos', data);
   }
   static Future<List<Todo>> load()async{

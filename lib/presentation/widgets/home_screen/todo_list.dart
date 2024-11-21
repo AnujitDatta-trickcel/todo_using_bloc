@@ -6,11 +6,9 @@ import '../../screens/add.dart';
 class TodoList extends StatelessWidget {
   const TodoList({
     super.key,
-    required this.length,
     required this.state,
   });
   final TodoListFetched state;
-  final int length;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +22,6 @@ class TodoList extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => AddTodoScreen(
-                  length: length,
                   isNew: false,
                   todo: state.todos[index],
                 ),

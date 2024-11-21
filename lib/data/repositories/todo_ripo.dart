@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:todo_using_bloc/data/data_providers/shared_prefs.dart';
 import '../models/todo_model.dart';
 
@@ -13,6 +15,7 @@ class TodoRepository {
     return todo;
   }
   static Future<void> addTodo(Todo todo)async{
+    todo.id=LocalData.todos.length+1;
     LocalData.todos.add(todo);
     await LocalData.save();
   }

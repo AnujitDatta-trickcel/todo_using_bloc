@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_using_bloc/data/models/todo_model.dart';
@@ -26,7 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    int length = 0;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Todo'),
@@ -38,18 +39,17 @@ class _HomeScreenState extends State<HomeScreen> {
       body: BlocBuilder<TodoBloc, TodoState>(
         builder: (context, state) {
           if (state is TodoListFetched) {
-            length = state.todos.length;
             return Visibility(
               visible: state.todos.isNotEmpty,
               replacement: const EmptyNotation(),
-              child: TodoList(length: length,state: state,),
+              child: TodoList(state: state,),
             );
           } else {
             return const LoadingNotation();
           }
         },
       ),
-      floatingActionButton: AddButton(length: length,),
+      floatingActionButton: const AddButton(),
     );
   }
 }
