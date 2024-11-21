@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
-class TitleField extends StatelessWidget {
-  const TitleField({
+class DescriptionField extends StatelessWidget {
+  const DescriptionField({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return ReactiveTextField(
-      formControlName: 'title',
+      formControlName: 'description',
       decoration: const InputDecoration(
-        labelText: 'Title',
+        labelText: 'Description',
         border: OutlineInputBorder(),
       ),
+      minLines: 5,
+      maxLines: null,
     );
   }
 }

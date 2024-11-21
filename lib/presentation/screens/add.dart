@@ -1,11 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 import 'package:todo_using_bloc/data/models/todo_model.dart';
 import 'package:todo_using_bloc/logic/todo_bloc.dart';
 
-import '../widgets/add_screen/discription_field.dart';
+import '../widgets/add_screen/description_field.dart';
 import '../widgets/add_screen/title_field.dart';
 
 class AddTodoScreen extends StatefulWidget {
@@ -20,16 +19,24 @@ class AddTodoScreen extends StatefulWidget {
 }
 
 class _AddTodoScreenState extends State<AddTodoScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _titleTEC = TextEditingController();
-  final TextEditingController _descriptionTEC = TextEditingController();
+  final form=FormGroup({
+    'title': FormControl<String>(
+      validators: [Validators.required],
+    ),
+    'description': FormControl<String>(),
+  });
+
+  String get title => form.control('title').value;
+  set title(String value) => form.control('title').value = value;
+  String get description => form.control('description').value;
+  set description(String value) => form.control('description').value = value;
 
   @override
   void initState() {
     super.initState();
     if (!widget.isNew) {
-      _titleTEC.text = widget.todo!.title;
-      _descriptionTEC.text = widget.todo!.description;
+      title = widget.todo!.title;
+      description = widget.todo!.description;
     }
   }
 
@@ -48,18 +55,18 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
           ),
         ],
       ),
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
+      body: ReactiveForm(
+        formGroup: form,
+        child: const Padding(
+          padding: EdgeInsets.all(8.0),
           child: Column(
             children: [
-              const SizedBox(
+              SizedBox(
                 height: 20,
               ),
-              TitleField(titleTEC: _titleTEC),
-              const SizedBox(height: 20),
-              DescriptionField(descriptionTEC: _descriptionTEC),
+              TitleField(),
+              SizedBox(height: 20),
+              DescriptionField(),
             ],
           ),
         ),
@@ -67,8 +74,8 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
     );
   }
 
-  void checkButtonPressed(BuildContext context,) {
-    if (_formKey.currentState!.validate()) {
+  void checkButtonPressed(BuildContext context) {
+    if (form.valid) {
       if (widget.isNew) {
         addTodo(context);
       } else {
@@ -81,8 +88,8 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
 
   void updateTodo(BuildContext context) {
     Todo updatedTodo = widget.todo!;
-    updatedTodo.title = _titleTEC.text.trim();
-    updatedTodo.description = _descriptionTEC.text;
+    updatedTodo.title = title;
+    updatedTodo.description = description;
     context
         .read<TodoBloc>()
         .add(Update(updatedTodo: updatedTodo));
@@ -92,9 +99,11 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
     context.read<TodoBloc>().add(Add(
         newTodo: Todo(
           id: 0,
-          title: _titleTEC.text.trim(),
-          description: _descriptionTEC.text,
+          title: title,
+          description: description,
         )));
   }
 }
+
+
 
