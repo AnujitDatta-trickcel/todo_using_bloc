@@ -1,13 +1,9 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo_using_bloc/data/models/todo_model.dart';
 import 'package:todo_using_bloc/logic/todo_bloc.dart';
-import 'package:todo_using_bloc/presentation/screens/add.dart';
-
+import 'package:todo_using_bloc/presentation/screens/table.dart';
 import '../widgets/home_screen/add_button.dart';
-import '../widgets/home_screen/delete_all_todo_button.dart';
 import '../widgets/home_screen/empty_notation.dart';
 import '../widgets/home_screen/loading_notation.dart';
 import '../widgets/home_screen/todo_list.dart';
@@ -32,8 +28,14 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('Todo'),
         centerTitle: true,
-        actions: const [
-          DeleteAllTodoButton()
+        actions: [
+          //DeleteAllTodoButton()
+          IconButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>TableScreen()));
+            },
+            icon: const Icon(Icons.table_view),
+          ),
         ],
       ),
       body: BlocBuilder<TodoBloc, TodoState>(
