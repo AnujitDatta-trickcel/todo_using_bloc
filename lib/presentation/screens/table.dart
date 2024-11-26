@@ -53,7 +53,7 @@ class TableScreen extends StatelessWidget {
                     DataCell(Text(state.todos[index%state.todos.length].description,softWrap: false,)),
                   ],
                   color: index%2!=0
-                      ? WidgetStateProperty.all(Colors.grey[300])
+                      ? WidgetStateProperty.all(Theme.of(context).disabledColor.withOpacity(0.2))
                       : WidgetStateProperty.all(Colors.transparent),
                 ),
               ),
